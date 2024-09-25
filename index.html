@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dtools.pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="bg-gray-800 p-4">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-white hover:text-gray-300">Home</a>
+            <div class="text-xl font-bold">
+                dtools<span class="text-red-500">.pro</span>
+            </div>
+        </nav>
+    </header>
+    <main class="flex items-center justify-center h-screen">
+        <h1 class="text-4xl font-bold">
+            <span class="letters">dtools</span><span class="letters pro text-red-500">.pro</span>
+        </h1>
+    </main>
+
+    <script>
+        // Wrap every letter in a span
+        document.querySelectorAll('.letters').forEach(textWrapper => {
+            textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter inline-block opacity-0'>$&</span>");
+        });
+
+        function animateLetters() {
+            anime.timeline({loop: false})
+                .add({
+                    targets: '.letter',
+                    rotateY: [-90, 0],
+                    opacity: [0, 1],
+                    duration: 1300,
+                    delay: (el, i) => 45 * i,
+                    easing: 'easeOutExpo'
+                })
+                .add({
+                    targets: '.letter',
+                    rotateY: [0, 90],
+                    opacity: [1, 0],
+                    duration: 1300,
+                    delay: (el, i) => 3000 + 45 * i, // 3 seconds delay before reversing
+                    easing: 'easeInExpo'
+                })
+                .finished.then(() => {
+                    // Reset the letters to their initial state
+                    anime.set('.letter', {rotateY: -90, opacity: 0});
+                    // Restart the animation
+                    setTimeout(animateLetters, 100);
+                });
+        }
+
+        animateLetters();
+    </script>
+</body>
+</html>
